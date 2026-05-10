@@ -4,6 +4,7 @@ import {
   createContext,
   useState,
   useEffect,
+  useRef,
   type ReactNode,
   type Dispatch,
   type SetStateAction,
@@ -35,6 +36,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isLoading: true,
   });
 
+  // Flag para evitar que el efecto de sincronización borre datos
+  // antes de que la hidratación desde localStorage termine.
+  const hydrated = useRef(false);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       try {
@@ -56,13 +61,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem(USER_KEY);
         setState((prev) => ({ ...prev, isLoading: false }));
       }
+      hydrated.current = true;
     }, 0);
 
     return () => clearTimeout(timer);
   }, []);
 
-  // Sincronizar user en localStorage cuando cambia el estado
+  // Sincronizar user en localStorage cuando cambia el estado.
+  // Solo DESPUÉS de la hidratación inicial para no borrar datos prematuramente.
   useEffect(() => {
+    if (!hydrated.current) return;
+
     if (state.user) {
       localStorage.setItem(USER_KEY, JSON.stringify(state.user));
     } else {
