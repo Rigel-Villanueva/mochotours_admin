@@ -63,12 +63,12 @@ export default function DashboardLayout({
 
   return (
     <AuthGuard>
-      <div className="flex min-h-screen bg-stone-50">
+      <div className="flex min-h-screen w-full overflow-x-hidden bg-stone-50">
         {/* Sidebar */}
         <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Contenido principal — desplazado por el sidebar en desktop */}
-        <div className="flex-1 lg:ml-[240px] flex flex-col min-h-screen">
+        <div className="flex-1 lg:ml-[240px] flex flex-col min-h-screen w-full overflow-x-hidden">
 
           {/* ── Header Top ─────────────────────────────────────── */}
           <header className="sticky top-0 z-30 h-14 bg-white/80 backdrop-blur-md border-b border-stone-200/60 px-4 sm:px-6 flex items-center justify-between">

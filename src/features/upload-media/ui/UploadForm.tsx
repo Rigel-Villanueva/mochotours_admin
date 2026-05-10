@@ -145,18 +145,17 @@ export function UploadForm({ isOpen, onClose, onSuccess }: UploadFormProps) {
            {/* Dropzone */}
            {!file ? (
              <div 
-               className={`h-64 border-2 border-dashed rounded-xl flex flex-col items-center justify-center p-6 text-center transition-all cursor-pointer 
+               className={`h-64 border-2 border-dashed rounded-xl flex flex-col items-center justify-center p-6 text-center transition-all cursor-pointer relative
                           ${dragActive ? 'border-primary bg-primary/10' : 'border-stone-300 bg-stone-50 hover:bg-stone-100'}`}
                onDragEnter={handleDrag}
                onDragLeave={handleDrag}
                onDragOver={handleDrag}
                onDrop={handleDrop}
-               onClick={() => inputRef.current?.click()}
              >
-                <UploadCloud className={`h-12 w-12 mb-4 ${dragActive ? 'text-primary' : 'text-stone-400'}`} />
-                <h4 className="text-base font-semibold text-stone-700">Arrastra archivos aquí o haz click para explorar</h4>
-                <p className="mt-2 text-sm text-stone-500">Imágenes (JPG, PNG) y Videos (MP4) max {MAX_SIZE_MB}MB.</p>
-                <input ref={inputRef} type="file" className="hidden" accept={ALLOWED_TYPES.join(',')} onChange={handleChange} />
+                <input ref={inputRef} type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept={ALLOWED_TYPES.join(',')} onChange={handleChange} />
+                <UploadCloud className={`h-12 w-12 mb-4 pointer-events-none ${dragActive ? 'text-primary' : 'text-stone-400'}`} />
+                <h4 className="text-base font-semibold text-stone-700 pointer-events-none">Arrastra archivos aquí o haz click para explorar</h4>
+                <p className="mt-2 text-sm text-stone-500 pointer-events-none">Imágenes (JPG, PNG) y Videos (MP4) max {MAX_SIZE_MB}MB.</p>
              </div>
            ) : (
              <div className="space-y-6">

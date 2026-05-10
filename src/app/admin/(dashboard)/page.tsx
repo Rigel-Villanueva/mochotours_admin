@@ -394,13 +394,7 @@ export default function AdminDashboardPage() {
             Acciones rápidas
           </h2>
           <div className="space-y-3">
-            <QuickAction
-              icon={Upload}
-              label="Subir contenido"
-              description="Agrega fotos o videos a tu galería"
-              href={ROUTES.ADMIN_GALLERY}
-              primary
-            />
+
             <QuickAction
               icon={FolderPlus}
               label="Gestionar álbumes"

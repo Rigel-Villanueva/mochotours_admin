@@ -397,11 +397,11 @@ export default function AdminAlbumDetailPage() {
                     }}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  <div className="bg-white w-16 h-16 rounded-full shadow-sm border border-stone-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <div className="bg-white w-16 h-16 rounded-full shadow-sm border border-stone-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform pointer-events-none">
                     <UploadCloud className="h-8 w-8 text-green-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-stone-800 mb-1">Haz clic o arrastra un archivo</h3>
-                  <p className="text-sm text-stone-500 mb-2">JPG, PNG, MP4 hasta 50MB</p>
+                  <h3 className="text-lg font-semibold text-stone-800 mb-1 pointer-events-none">Haz clic o arrastra un archivo</h3>
+                  <p className="text-sm text-stone-500 mb-2 pointer-events-none">JPG, PNG, MP4 hasta 50MB</p>
                 </div>
               ) : (
                 /* Momento 2: Con archivo */
