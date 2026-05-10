@@ -32,32 +32,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AuthState>({
     user: null,
     isAuthenticated: false,
-    isLoading: true, // arranca cargando hasta verificar localStorage
+    isLoading: true,
   });
 
-  // Al montar, intentar restaurar la sesión desde localStorage
   useEffect(() => {
-    try {
-      const token = localStorage.getItem(TOKEN_KEY);
-      const savedUser = localStorage.getItem(USER_KEY);
+    const timer = setTimeout(() => {
+      try {
+        const token = localStorage.getItem(TOKEN_KEY);
+        const savedUser = localStorage.getItem(USER_KEY);
 
-      if (token && savedUser) {
-        const user = JSON.parse(savedUser);
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setState({
-          user,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      } else {
+        if (token && savedUser) {
+          const user = JSON.parse(savedUser);
+          setState({
+            user,
+            isAuthenticated: true,
+            isLoading: false,
+          });
+        } else {
+          setState((prev) => ({ ...prev, isLoading: false }));
+        }
+      } catch {
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
         setState((prev) => ({ ...prev, isLoading: false }));
       }
-    } catch {
-      // Si localStorage está corrupto, limpiar y continuar
-      localStorage.removeItem(TOKEN_KEY);
-      localStorage.removeItem(USER_KEY);
-      setState((prev) => ({ ...prev, isLoading: false }));
-    }
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Sincronizar user en localStorage cuando cambia el estado
