@@ -17,4 +17,5 @@ export const ROUTES = {
   ADMIN_ALBUMS: '/admin/albumes',
   ADMIN_ALBUM_DETAIL: (id: string) => `/admin/albumes/${id}`,
   ADMIN_CONTACT: '/admin/contacto',
+  ADMIN_PAGOS: '/admin/pagos',
 } as const;

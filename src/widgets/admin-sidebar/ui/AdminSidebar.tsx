@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, FolderOpen, Phone, X, LogOut, ChevronUp } from 'lucide-react';
+import { LayoutDashboard, FileText, FolderOpen, Phone, X, LogOut, ChevronUp, CreditCard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/entities/user';
 import { ROUTES } from '@/shared/config/routes';
@@ -33,7 +33,13 @@ const NAV_GROUPS = [
       { label: 'Contacto', href: ROUTES.ADMIN_CONTACT, icon: Phone },
     ],
   },
-] as const;
+  {
+    label: 'Administración VIP',
+    items: [
+      { label: 'Pagos', href: ROUTES.ADMIN_PAGOS, icon: CreditCard, requireSuperadmin: true },
+    ],
+  },
+];
 
 // ── Props ───────────────────────────────────────────────────────────
 
@@ -109,13 +115,24 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
 
       {/* ── Navegación agrupada ─────────────────────────────── */}
       <nav className="flex-1 px-3 py-4 space-y-5 overflow-y-auto">
-        {NAV_GROUPS.map((group) => (
-          <div key={group.label}>
+        {NAV_GROUPS.map((group) => {
+          // Filtramos los items basándonos en si requieren superadmin
+          const filteredItems = group.items.filter((item) => {
+            if (('requireSuperadmin' in item) && item.requireSuperadmin) {
+              return user?.rol === 'superadmin';
+            }
+            return true;
+          });
+
+          if (filteredItems.length === 0) return null;
+
+          return (
+            <div key={group.label}>
             <p className="text-[10px] tracking-[0.2em] uppercase text-stone-500 font-semibold px-3 mb-2">
               {group.label}
             </p>
             <div className="space-y-0.5">
-              {group.items.map((item) => {
+              {filteredItems.map((item) => {
                 const active = isActive(item.href);
                 const Icon = item.icon;
 
@@ -143,7 +160,8 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
               })}
             </div>
           </div>
-        ))}
+          );
+        })}
       </nav>
 
       {/* ── Usuario + Logout ─────────────────────────────────── */}

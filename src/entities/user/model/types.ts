@@ -7,6 +7,7 @@
 export type User = {
   id: string;
   email: string;
+  rol?: 'admin' | 'superadmin';
 };
 
 /** Sesión devuelta por el backend al hacer login */

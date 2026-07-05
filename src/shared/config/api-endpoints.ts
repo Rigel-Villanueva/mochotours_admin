@@ -29,3 +29,8 @@ export const ADMIN_ACTIVITY = '/api/admin/activity';
 
 // ── Health ──────────────────────────────────────────────────────────
 export const HEALTH = '/health';
+
+// ── Pagos ───────────────────────────────────────────────────────────
+export const ADMIN_PAGOS_API = '/api/admin/pagos';
+export const ADMIN_PAGOS_FECHA = (id: number) => `/api/admin/pagos/${id}/fecha`;
+export const ADMIN_PAGOS_PAGAR = (id: number) => `/api/admin/pagos/${id}/pagar`;
